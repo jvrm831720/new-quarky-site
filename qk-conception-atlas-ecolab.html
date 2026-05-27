@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QK Conception — Atlas EcoLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-elevated: #111111;
+    --bg-subtle: #0f0f0f;
+    --border: #1e1e1e;
+    --border-strong: #2a2a2a;
+    --text: #ededed;
+    --text-muted: #888888;
+    --text-faint: #555555;
+    --accent: #6366f1;
+    --accent-dim: rgba(99, 102, 241, 0.12);
+    --accent-border: rgba(99, 102, 241, 0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* HEADER */
+  .site-header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 50;
+  }
+  .site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-quarky {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-quarky svg {
+    width: 28px;
+    height: 24px;
+    display: block;
+  }
+  .logo-quarky .wordmark {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .doc-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+  .doc-meta .v { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 120px 0 100px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .hero-title-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .logo-atlas-mark {
+    width: 56px;
+    height: 56px;
+    display: block;
+    flex-shrink: 0;
+  }
+  .hero h1 {
+    font-size: 64px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    color: var(--text);
+  }
+  .hero-subtitle {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+    margin-bottom: 24px;
+    max-width: 760px;
+  }
+  .hero-description {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    max-width: 680px;
+  }
+
+  /* SECTIONS */
+  section.block {
+    padding: 100px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .section-heading {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 48px;
+    max-width: 820px;
+  }
+
+  /* SECTION 1 — prose */
+  .prose p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #c8c8c8;
+    margin-bottom: 22px;
+    max-width: 760px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .prose .highlight {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* SECTION 2 — cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    padding: 28px;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    background: #131313;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .card-icon svg { width: 18px; height: 18px; }
+  .card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 4px;
+  }
+  .card-subtitle {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .card ul {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .card ul li {
+    font-size: 13.5px;
+    color: #b5b5b5;
+    padding: 7px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.45;
+  }
+  .card ul li::before {
+    content: "";
+    width: 4px; height: 4px;
+    background: var(--text-faint);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .data-layer {
+    margin-top: 12px;
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .data-layer-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 4px 10px;
+    border: 1px solid var(--accent-border);
+    background: var(--accent-dim);
+    border-radius: 4px;
+  }
+  .data-layer-text {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    flex: 1;
+    min-width: 280px;
+  }
+
+  /* SECTION 3 — timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .ato {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .ato:first-child { border-top: 1px solid var(--border-strong); }
+  .ato:last-child { border-bottom: 1px solid var(--border-strong); }
+  .ato-number-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ato-number {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+  }
+  .ato-tag {
+    display: inline-block;
+    width: fit-content;
+    padding: 4px 10px;
+    border: 1px solid var(--accent-border);
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+  .ato-tag.next { color: var(--text-muted); border-color: var(--border-strong); background: transparent; }
+  .ato-tag.future { color: var(--text-faint); border-color: var(--border); background: transparent; }
+  .ato h3 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .ato p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: #b5b5b5;
+    max-width: 720px;
+  }
+  .ato p + p { margin-top: 12px; }
+
+  /* SECTION 4 — flywheel */
+  .flywheel-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .flywheel-svg {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    display: block;
+  }
+
+  /* SECTION 5 — table */
+  .position-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .position-table tr {
+    border-top: 1px solid var(--border);
+  }
+  .position-table tr:first-child { border-top: none; }
+  .position-table td {
+    padding: 22px 24px;
+    font-size: 15px;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .position-table td:first-child {
+    width: 220px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 26px;
+  }
+  .position-table td:last-child {
+    color: var(--text);
+    font-weight: 400;
+  }
+  .position-table tr:last-child td:last-child {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    padding: 60px 0 80px;
+    text-align: center;
+  }
+  .site-footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: -0.005em;
+  }
+  .site-footer p span { color: var(--text-faint); }
+
+  /* RESPONSIVE */
+  @media (max-width: 860px) {
+    .container { padding: 0 24px; }
+    .hero { padding: 80px 0 60px; }
+    .hero h1 { font-size: 44px; }
+    .hero-subtitle { font-size: 19px; }
+    .section-heading { font-size: 30px; }
+    section.block { padding: 64px 0; }
+    .cards { grid-template-columns: 1fr; }
+    .ato { grid-template-columns: 1fr; gap: 18px; padding: 32px 0; }
+    .ato h3 { font-size: 22px; }
+    .position-table td { padding: 16px 14px; font-size: 14px; display: block; }
+    .position-table td:first-child { width: 100%; padding-bottom: 4px; }
+    .position-table tr { padding: 14px 0; }
+    .logo-atlas-mark { width: 44px; height: 44px; }
+    .data-layer { padding: 18px 20px; gap: 14px; }
+  }
+
+  /* PRINT */
+  @media print {
+    :root {
+      --bg: #ffffff;
+      --bg-elevated: #ffffff;
+      --bg-subtle: #fafafa;
+      --border: #e5e5e5;
+      --border-strong: #d0d0d0;
+      --text: #0a0a0a;
+      --text-muted: #555;
+      --text-faint: #888;
+      --accent: #4338ca;
+      --accent-dim: #eef0ff;
+      --accent-border: #c7caff;
+    }
+    html, body { background: #fff; color: #0a0a0a; font-size: 11pt; }
+    .site-header { position: static; backdrop-filter: none; background: #fff; }
+    .logo-quarky svg path { fill: #0a0a0a !important; }
+    .logo-atlas-mark .atlas-circle { fill: #6366f1 !important; }
+    .logo-atlas-mark .atlas-word { fill: #0a0a0a !important; }
+    .hero { padding: 30pt 0; page-break-after: avoid; }
+    .hero h1 { font-size: 28pt; }
+    .hero-subtitle { font-size: 14pt; }
+    section.block { padding: 24pt 0; page-break-inside: avoid; }
+    .section-heading { font-size: 18pt; }
+    .ato { page-break-inside: avoid; }
+    .card { page-break-inside: avoid; }
+    .cards { gap: 8pt; }
+    .card { padding: 14pt; }
+    .doc-meta .v { color: #4338ca; }
+    @page { margin: 18mm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container">
+    <div class="logo-quarky">
+      <svg viewBox="0 0 2026 1764" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Quarky">
+        <path d="M1173.32 981.849L1173.32 736.981L1482.09 736.981C1467.84 662.491 1441.71 594.34 1403.71 532.528C1365.71 469.132 1319.79 415.245 1265.95 370.868C1210.53 324.906 1147.99 290.038 1078.32 266.264C1007.06 240.906 931.057 228.226 850.302 228.226C756.88 228.226 671.375 244.868 593.787 278.151C514.615 309.849 446.527 355.019 389.524 413.66C330.937 472.302 285.809 542.038 254.141 622.868C220.889 702.113 204.262 788.491 204.262 882C204.262 975.509 220.889 1062.68 254.141 1143.51C285.809 1222.75 330.937 1291.7 389.524 1350.34C446.527 1407.4 514.615 1452.57 593.787 1485.85C671.375 1519.13 756.88 1535.77 850.302 1535.77C934.224 1535.77 1013.4 1522.3 1087.82 1495.36C1160.65 1468.42 1225.58 1430.38 1282.58 1381.25C1338 1332.11 1383.92 1273.47 1420.34 1205.32C1456.76 1137.17 1480.51 1062.68 1491.59 981.849L1173.32 981.849ZM2026 736.981L2026 981.849L1695.85 981.849C1684.77 1095.96 1656.27 1201.36 1610.35 1298.04C1562.85 1393.13 1501.88 1475.55 1427.46 1545.28C1351.46 1613.43 1265.16 1667.32 1168.57 1706.94C1070.4 1744.98 964.309 1764 850.302 1764C728.378 1764 615.955 1741.81 513.032 1697.43C408.525 1653.06 318.27 1592.04 242.265 1514.38C166.26 1435.13 106.881 1341.62 64.1288 1233.85C21.3762 1126.08 -3.30112e-05 1008.79 -3.85534e-05 882C-4.40957e-05 755.208 21.3762 637.925 64.1288 530.151C106.881 422.377 166.26 329.66 242.265 252C318.269 172.755 408.525 110.943 513.032 66.5661C615.955 22.1888 728.378 9.02319e-05 850.302 8.49024e-05C961.143 8.00574e-05 1064.07 18.2266 1159.07 54.6794C1254.08 91.1321 1338.79 141.849 1413.21 206.83C1486.05 271.811 1547.01 349.472 1596.1 439.811C1643.6 530.151 1675.27 629.207 1691.1 736.981L2026 736.981Z" fill="#ededed"/>
+      </svg>
+      <span class="wordmark">Quarky</span>
+    </div>
+    <div class="doc-meta">QK&nbsp;CONCEPTION&nbsp;·&nbsp;<span class="v">v1</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Documento estratégico interno · 2026</div>
+    <div class="hero-title-row">
+      <svg class="logo-atlas-mark" viewBox="0 0 508 508" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Atlas">
+        <defs>
+          <linearGradient id="atlasGrad" x1="101.029" y1="452.091" x2="472.302" y2="0.2772" gradientUnits="userSpaceOnUse">
+            <stop offset="0.159524" stop-color="#6366f1"/>
+            <stop offset="0.300614" stop-color="#6366f1" stop-opacity="0.81"/>
+            <stop offset="0.627479" stop-color="#6366f1" stop-opacity="0.24"/>
+            <stop offset="0.847599" stop-color="#6366f1" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="atlas-circle" d="M254.228 507.811C394.397 507.811 508.026 394.231 508.026 254.122C508.026 114.014 394.397 0.433594 254.228 0.433594C114.059 0.433594 0.429688 114.014 0.429688 254.122C0.429688 394.231 114.059 507.811 254.228 507.811Z" fill="url(#atlasGrad)"/>
+      </svg>
+      <h1>Atlas EcoLab</h1>
+    </div>
+    <p class="hero-subtitle">O sistema operacional da medicina veterinária brasileira.</p>
+    <p class="hero-description">Une diagnóstico laboratorial, gestão clínica e inteligência artificial em uma plataforma única — construída de dentro para fora, a partir dos dados.</p>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">01 — Tese</div>
+    <h2 class="section-heading">Por que de dentro para fora importa</h2>
+    <div class="prose">
+      <p>O mercado veterinário opera hoje com os dados clínicos espalhados e desconectados. O SimplesVet não se comunica com sistemas externos. O portal atual do Laborlife permite apenas que o clínico baixe o laudo em PDF — o dado chega morto, sem estrutura, sem contexto, sem continuidade. Cada atendimento começa do zero.</p>
+      <p>Todo concorrente foi construído <span class="highlight">da operação para o dado</span> — começaram pela agenda, pelo financeiro, pelo prontuário. O diagnóstico ficou sempre de fora, tratado como um arquivo para download, não como o centro da inteligência clínica.</p>
+      <p>O Atlas EcoLab inverte isso. Começa pelo diagnóstico — a camada mais rica e mais negligenciada do mercado — e constrói o ecossistema ao redor dele. O resultado é um prontuário centralizado e vivo: quando um pet é atendido por uma clínica parceira do Laborlife que utiliza o Atlas, seus dados são capturados, estruturados e guardados. Quando esse mesmo pet chegar a qualquer outra clínica que use o Atlas, o histórico já está lá.</p>
+      <p><span class="highlight">Esse é o moat.</span> Não é uma feature. É uma vantagem estrutural que nenhum concorrente consegue replicar retroativamente — porque eles nunca tiveram o dado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">02 — Produto</div>
+    <h2 class="section-heading">Arquitetura do ecossistema</h2>
+    <div class="cards">
+      <!-- Card 1: Atlas Lab -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6"/>
+            <path d="M10 3v6.5L4.5 19a2 2 0 0 0 1.732 3h11.536A2 2 0 0 0 19.5 19L14 9.5V3"/>
+            <path d="M7.5 14h9"/>
+          </svg>
+        </div>
+        <h3>Atlas Lab</h3>
+        <div class="card-subtitle">LIS Veterinário</div>
+        <ul>
+          <li>Laudos estruturados</li>
+          <li>Requisição digital</li>
+          <li>Histórico do paciente</li>
+          <li>Integração com clínicas</li>
+        </ul>
+      </div>
+      <!-- Card 2: Atlas Clinic -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 3v6a4 4 0 0 0 8 0V3"/>
+            <path d="M4 3h2"/>
+            <path d="M10 3h2"/>
+            <path d="M8 13v3a5 5 0 0 0 10 0"/>
+            <circle cx="18" cy="9" r="2"/>
+          </svg>
+        </div>
+        <h3>Atlas Clinic</h3>
+        <div class="card-subtitle">Gestão Clínica</div>
+        <ul>
+          <li>Prontuário centralizado</li>
+          <li>Agenda e financeiro</li>
+          <li>Comunicação tutor-clínica</li>
+          <li>Requisição integrada ao lab</li>
+        </ul>
+      </div>
+      <!-- Card 3: Orion -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z"/>
+            <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/>
+            <path d="M5 14l.6 1.6L7 16l-1.4.4L5 18l-.6-1.6L3 16l1.4-.4L5 14z"/>
+          </svg>
+        </div>
+        <h3>Orion</h3>
+        <div class="card-subtitle">Inteligência Diagnóstica</div>
+        <ul>
+          <li>Diagnóstico assistido</li>
+          <li>Alertas de padrão</li>
+          <li>Benchmarks por espécie e raça</li>
+          <li>WhatsApp integrado</li>
+        </ul>
+      </div>
+    </div>
+    <div class="data-layer">
+      <div class="data-layer-label">Data Layer · proprietário</div>
+      <div class="data-layer-text">Base de dados diagnósticos veterinários estruturados · Maior repositório de laudos vet do Brasil <span style="color:var(--text-faint)">(objetivo)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">03 — Execução</div>
+    <h2 class="section-heading">Os três atos de construção</h2>
+    <div class="timeline">
+      <div class="ato">
+        <div class="ato-number-col">
+          <div class="ato-number">ATO 01</div>
+          <div class="ato-tag">Agora</div>
+        </div>
+        <div>
+          <h3>Atlas no Laborlife — Fundação</h3>
+          <p>Construir o Atlas do zero a partir do Laborlife. Substituir completamente o Esmeralda e tornar o Atlas o sistema operacional do lab — desde a requisição digital até a entrega do laudo estruturado, incluindo integração da Orion no WhatsApp.</p>
+          <p>Quando concluído: o Laborlife é a prova de execução. Caso de uso real, com dados reais, que valida o produto para o mercado.</p>
+        </div>
+      </div>
+
+      <div class="ato">
+        <div class="ato-number-col">
+          <div class="ato-number">ATO 02</div>
+          <div class="ato-tag next">Próximo</div>
+        </div>
+        <div>
+          <h3>Atlas Clinic — Expansão</h3>
+          <p>Com o Atlas rodando 100% no Laborlife, desenvolver o módulo de gestão clínica voltado para as clínicas parceiras do Laborlife. Essas clínicas já conhecem o Atlas pelo lado do laudo. A adoção é o próximo passo lógico — e o Atlas chega com o que SimplesVet e Loop Vet não têm: o prontuário centralizado já existe, os dados diagnósticos já estão lá. A escala é feita sobre a base de parceiros do Laborlife.</p>
+        </div>
+      </div>
+
+      <div class="ato">
+        <div class="ato-number-col">
+          <div class="ato-number">ATO 03</div>
+          <div class="ato-tag future">Médio prazo</div>
+        </div>
+        <div>
+          <h3>Licenciamento e escala — Flywheel</h3>
+          <p>Com o modelo validado, licenciamos o Atlas para outros laboratórios veterinários. O mecanismo: lab licencia o Atlas → oferece o Atlas Clinic para suas clínicas parceiras → clínicas adotam → dados entram no ecossistema → IA fica mais inteligente → diferencial cresce → mais labs querem o Atlas.</p>
+          <p>Cada lab que entra traz sua rede. Cada clínica traz seus pacientes. Cada paciente traz dados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 — Flywheel -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">04 — Mecanismo</div>
+    <h2 class="section-heading">O flywheel</h2>
+    <div class="flywheel-wrap">
+      <svg class="flywheel-svg" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg" aria-label="Flywheel">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,4 L0,8 Z" fill="#6366f1"/>
+          </marker>
+        </defs>
+
+        <!-- subtle outer ring -->
+        <circle cx="360" cy="360" r="270" fill="none" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="2 6"/>
+
+        <!-- Arcs connecting nodes (7 nodes around circle) -->
+        <!-- We'll position 7 nodes at angles: -90, -90+360/7, etc. -->
+        <!-- Computed positions: -->
+        <!-- n0 (top):       cx=360, cy=90 -->
+        <!-- n1 (upper-right): 360 + 270*cos(-90+51.43°) -->
+        <!-- Use approximations below. -->
+
+        <!-- Arrows: short arcs between consecutive nodes -->
+        <g fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.55">
+          <path d="M 470 110 A 270 270 0 0 1 605 245" marker-end="url(#arrowhead)"/>
+          <path d="M 625 365 A 270 270 0 0 1 580 480" marker-end="url(#arrowhead)"/>
+          <path d="M 515 580 A 270 270 0 0 1 380 630" marker-end="url(#arrowhead)"/>
+          <path d="M 270 625 A 270 270 0 0 1 145 555" marker-end="url(#arrowhead)"/>
+          <path d="M 100 440 A 270 270 0 0 1 95 305" marker-end="url(#arrowhead)"/>
+          <path d="M 130 200 A 270 270 0 0 1 245 110" marker-end="url(#arrowhead)"/>
+          <path d="M 340 90 A 270 270 0 0 1 430 100" marker-end="url(#arrowhead)"/>
+        </g>
+
+        <!-- Nodes -->
+        <!-- Node helper: ellipse + text. Two lines max each. -->
+        <g font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500" fill="#ededed" text-anchor="middle">
+
+          <!-- N1: top -->
+          <g transform="translate(360 90)">
+            <rect x="-92" y="-26" width="184" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Lab licencia</text>
+            <text y="14">o Atlas</text>
+          </g>
+
+          <!-- N2: upper-right -->
+          <g transform="translate(570 200)">
+            <rect x="-92" y="-26" width="184" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Oferece Atlas Clinic</text>
+            <text y="14">às clínicas parceiras</text>
+          </g>
+
+          <!-- N3: right -->
+          <g transform="translate(620 425)">
+            <rect x="-92" y="-26" width="184" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Clínicas</text>
+            <text y="14">adotam</text>
+          </g>
+
+          <!-- N4: bottom-right -->
+          <g transform="translate(480 600)">
+            <rect x="-100" y="-26" width="200" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Dados entram</text>
+            <text y="14">no ecossistema</text>
+          </g>
+
+          <!-- N5: bottom-left -->
+          <g transform="translate(220 600)">
+            <rect x="-100" y="-26" width="200" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">IA fica mais</text>
+            <text y="14">inteligente</text>
+          </g>
+
+          <!-- N6: left -->
+          <g transform="translate(100 425)">
+            <rect x="-92" y="-26" width="184" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Diferencial</text>
+            <text y="14">cresce</text>
+          </g>
+
+          <!-- N7: upper-left -->
+          <g transform="translate(150 200)">
+            <rect x="-100" y="-26" width="200" height="52" rx="6" fill="#111111" stroke="#2a2a2a"/>
+            <text y="-2">Mais labs</text>
+            <text y="14">querem o Atlas</text>
+          </g>
+
+        </g>
+
+        <!-- Center label -->
+        <g text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace">
+          <circle cx="360" cy="360" r="64" fill="#0a0a0a" stroke="#6366f1" stroke-width="1" opacity="0.95"/>
+          <text x="360" y="352" font-size="10" fill="#888888" letter-spacing="1.5">DATA</text>
+          <text x="360" y="370" font-size="11" fill="#6366f1" font-weight="600" letter-spacing="1">FLYWHEEL</text>
+          <text x="360" y="386" font-size="9" fill="#555555" letter-spacing="1">ATLAS</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">05 — Posicionamento</div>
+    <h2 class="section-heading">Resumo estratégico</h2>
+    <table class="position-table">
+      <tbody>
+        <tr><td>O que é</td><td>Sistema operacional da medicina veterinária</td></tr>
+        <tr><td>Para quem</td><td>Labs, clínicas e hospitais veterinários</td></tr>
+        <tr><td>Problema que resolve</td><td>Dados clínicos fragmentados e desconectados entre labs e clínicas</td></tr>
+        <tr><td>Como resolve</td><td>Ecossistema integrado que centraliza o prontuário do paciente a partir do diagnóstico</td></tr>
+        <tr><td>Diferencial</td><td>Único construído de dentro para fora — do dado diagnóstico para a gestão clínica</td></tr>
+        <tr><td>Moat</td><td>Prontuário centralizado + flywheel de dados + IA proprietária treinada no ecossistema</td></tr>
+        <tr><td>Visão</td><td>Maior plataforma de saúde animal da América Latina</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <p>Quarky <span>— We don't follow markets. We create them.</span></p>
+  </div>
+</footer>
+
+</body>
+</html>

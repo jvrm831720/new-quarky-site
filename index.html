@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Quarky — Health Tech. Pesquisa, design e engenharia de bioconvergência." />
+<meta property="og:title" content="Quarky — Health Tech" />
+<meta property="og:description" content="Pesquisa, design e engenharia de bioconvergência." />
+<meta property="og:type" content="website" />
+<title>Quarky — Health Tech</title>
+
+<!--
+================================================================================
+  PESQUISA — cursor.com/pt-BR/home.html  (analisado em 2026-05-21)
+  Fonte do arquivo local: ~/Desktop/cursor/cursor.com/pt-BR/home.html (≈26 MB)
+  Os valores abaixo foram extraídos diretamente dos arquivos via grep.
+================================================================================
+
+  ─── FONTES ───
+  • Família sans principal: "CursorGothic" (proprietária do Cursor — NÃO disponível
+    publicamente). Stack declarada:
+      font-family: CursorGothic, CursorGothic Fallback, system-ui, Helvetica Neue,
+                   Helvetica, Arial, sans-serif;
+    Variável: --font-sans
+  • Família serif: "EB Garamond" (Google Fonts). Stack:
+      font-family: EB Garamond, Iowan Old Style, Palatino Linotype, URW Palladio L,
+                   P052, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    Variável: --font-serif
+  • Fontes auxiliares encontradas: Mulish, Binance, FigtreeVF, KaTeX_*
+  • CDN realmente carregado (link no <head>):
+      https://fonts.googleapis.com/css?family=Inter:400,600&display=swap
+  • Decisão p/ Quarky: Inter (Google Fonts, mesmo CDN do cursor) como sans, e
+    JetBrains Mono para badges técnicas (alinha com protótipo qk-conception).
+
+  ─── CORES (paleta cursor) ───
+  • Fundo escuro:     rgb(20 20 30 / .7), #14120b, #26251e
+  • Texto sob escuro: rgb(217, 213, 207), rgb(207, 206, 188)
+  • Border sutil:     rgba(255,255,255,.3), rgba(0,0,0,.1), rgba(255,255,255,0.08)
+  • Glow azul:        rgba(139, 196, 248, 0.2), rgba(139, 196, 248, 0.08)
+  • Accent azul:      #3b82f6, rgba(58, 106, 159, 0.15)
+  • Marrom/sépia:     rgb(192, 133, 50), rgb(116, 112, 102)
+  Paleta Quarky (override do brief):
+    --bg-primary #0A0A0A · --bg-secondary #0D0D0D · --accent #C8FF00
+    --text-primary #FFFFFF · --text-secondary rgba(255,255,255,.5)
+    --border 1px solid rgba(255,255,255,.06)
+
+  ─── ANIMAÇÕES ───
+  Easings encontradas (valores exatos):
+    cubic-bezier(.25, 1, .5, 1)     → --ease-out-spring     [easing principal]
+    cubic-bezier(0, 0, .2, 1)       → --ease-out
+    cubic-bezier(.4, 0, .2, 1)      → tailwind default ease-in-out
+    cubic-bezier(.4, 0, .6, 1)
+    cubic-bezier(0, 0, 0, 1.43)     → slide-in-one-tap (spring exagerado)
+  Durações nomeadas:
+    --duration: .14s   (rápida — botões, hover)
+    --duration-slow: .25s  (nav, fades de página)
+  Padrões de transição mais usados (cole literal):
+    transition: opacity var(--duration) var(--ease-out-spring),
+                transform var(--duration) var(--ease-out-spring),
+                visibility 0s linear var(--duration);
+    transition: filter .15s;
+    transition: transform .6s ease-in-out;
+  Keyframes catalogadas:
+    fadeSlideUp:   from{opacity:0;transform:translateY(2px)} to{opacity:1;transform:translateY(0)}
+    fadeSlideRight, fadeIn, fade-in, navItemFade, navItemSlideIn/Out,
+    tilePopIn (.2s ease-out), shimmer (2.5s linear), shimmer-slide (1.5s),
+    pulse-emit (.3s), pulse-bit (.5s alternate infinite),
+    streaming-word-fade (80ms ease-out forwards), slide-in-one-tap (.5s).
+  Brief Quarky usa easing único:
+    --ease: cubic-bezier(0.16, 1, 0.3, 1)   (out-expo — mais "calm" que o spring do Cursor)
+
+  ─── LAYOUT ───
+  Grid: 12 colunas padrão; variações repeat(24,1fr), repeat(8,1fr), repeat(4,1fr)
+    --grid-cols: 12
+    --grid-gap:  calc(12rem / 15)   ≈ 0.8rem
+  Max-widths recorrentes: 768px (6×), 600px (3×), 48rem (2×)
+  Breakpoints:
+    @media (max-width: 600px)   — phone
+    @media (max-width: 768px)   — tablet
+    @media (min-width: 660px)   — md
+    @media (min-width: 900px)   — lg
+    @media (min-width: 1140px)  — xl
+    @media (min-width: 1380px)  — 2xl
+  Radius:
+    --radius-xs 4px · --radius-sm .25rem · --radius-md 8px ·
+    --radius-lg .5rem · --radius-xl .75rem
+  Botões (padding default): .78em 1.35em .8em
+  Border-radius global: 8px
+
+  ─── MICRO-INTERAÇÕES ───
+  • Hover usa @media (hover: hover) p/ não disparar em touch.
+  • Botões: transition filter .15s + brightness(1.1) no hover, brightness(.9) no active.
+  • Links: transition opacity .15s, opacity .5 → 1 no hover.
+  • Cursores customizados detectados: grab, grabbing, ew-resize, ns-resize, col-resize.
+  • Backdrop blur usado em sticky header: backdrop-filter: blur(10px) / blur(20px).
+  • Nav items entram com fadeSlideUp escalonado (stagger), .25s var(--ease-out-spring).
+
+  ─── ELEMENTOS VISUAIS ───
+  • Sem noise texture detectável no home.html do Cursor (fundo é cor sólida +
+    gradientes). Para Quarky, adicionamos uma textura de grão via SVG filter
+    inline (feTurbulence) — densidade baixa, opacidade 0.025.
+  • "Glow" do cursor: implementado aqui como radial-gradient fixo no body que
+    segue o mouse via --mx/--my; cor #C8FF00 com 4% de opacidade num raio de
+    400px — não há equivalente direto no Cursor (eles usam glows de fundo
+    estáticos com rgba(139,196,248,.2)).
+  • Badges técnicas no Cursor: caixas pequenas com border 1px rgba(255,255,255,.08),
+    radius 4px, font-mono, padding .15em .5em. Replicamos esse padrão.
+  • Separadores: border-top 1px solid rgba(255,255,255,.06).
+
+================================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── reset ─────────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  img, svg, video { display: block; max-width: 100%; }
+  button, input, textarea, select { font: inherit; color: inherit; background: none; border: none; }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; }
+
+  /* ─── variables ─────────────────────────────────────────────────────────── */
+  :root {
+    --bg-primary: #0A0A0A;
+    --bg-secondary: #0D0D0D;
+    --accent: #C8FF00;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.5);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border: 1px solid var(--border-color);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-spring: cubic-bezier(.25, 1, .5, 1);
+    --duration: .14s;
+    --duration-slow: .25s;
+    --radius-xs: 4px;
+    --radius-md: 8px;
+    --radius-lg: .5rem;
+    --max-width: 1120px;
+    --mx: 50%;
+    --my: 50%;
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* ─── body ──────────────────────────────────────────────────────────────── */
+  body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    background-image:
+      radial-gradient(400px circle at var(--mx) var(--my), rgba(200, 255, 0, 0.04), transparent 60%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* ─── noise texture (SVG filter inline) ─────────────────────────────────── */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+
+  /* ─── page routing ──────────────────────────────────────────────────────── */
+  .page {
+    display: none;
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    width: 100%;
+  }
+  .page.is-active { display: block; }
+
+  /* ─── shared utility classes (placeholders, vazios por ora) ─────────────── */
+  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 32px; }
+
+  /* ─── nav ───────────────────────────────────────────────────────────────── */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 64px;
+    padding: 0 clamp(24px, 5vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
+    transition: background-color var(--duration-slow) var(--ease),
+                backdrop-filter var(--duration-slow) var(--ease),
+                -webkit-backdrop-filter var(--duration-slow) var(--ease),
+                border-color var(--duration-slow) var(--ease);
+    transform: translateY(-100%);
+    opacity: 0;
+    animation: navEnter 600ms var(--ease) 200ms forwards;
+  }
+  .nav.scrolled {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom-color: var(--border-color);
+  }
+
+  @keyframes navEnter {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav__logo {
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav__link {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    cursor: pointer;
+    transition: color var(--duration) var(--ease);
+  }
+  .nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 250ms var(--ease);
+  }
+  .nav__link:hover { color: var(--text-primary); }
+  .nav__link:hover::after { transform: scaleX(1); }
+  .nav__link.is-active { color: var(--text-primary); }
+  .nav__link.is-active::after { transform: scaleX(1); }
+
+  .nav__cta {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: color 300ms var(--ease), border-color 300ms var(--ease);
+    isolation: isolate;
+  }
+  .nav__cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 300ms var(--ease);
+    z-index: -1;
+  }
+  .nav__cta:hover {
+    color: var(--bg-primary);
+    border-color: var(--accent);
+  }
+  .nav__cta:hover::before { transform: scaleX(1); }
+
+  @media (max-width: 768px) {
+    .nav { height: 56px; padding: 0 20px; }
+    .nav__links { display: none; }
+    .nav__right { gap: 0; }
+    .nav__cta { padding: 8px 14px; font-size: 12px; }
+    .nav__logo { font-size: 18px; }
+  }
+
+  /* ─── motion preferences ────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    body { background-image: none; }
+  }
+
+  /* ─── responsive base ───────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" aria-label="Navegação principal">
+    <a class="nav__logo" href="#home" data-nav-link="home">Quarky</a>
+    <div class="nav__right">
+      <div class="nav__links">
+        <a class="nav__link" href="#home"    data-nav-link="home">Início</a>
+        <a class="nav__link" href="#atlas"   data-nav-link="atlas">Atlas</a>
+        <a class="nav__link" href="#sobre"   data-nav-link="sobre">Sobre</a>
+        <a class="nav__link" href="#contato" data-nav-link="contato">Contato</a>
+      </div>
+      <a class="nav__cta" href="#contato" data-nav-link="contato">Falar com a Quarky</a>
+    </div>
+  </nav>
+
+  <section class="page" id="home"></section>
+  <section class="page" id="atlas"></section>
+  <section class="page" id="sobre"></section>
+  <section class="page" id="contato"></section>
+
+  <script>
+    (function () {
+      const VALID = ['home', 'atlas', 'sobre', 'contato'];
+
+      function showPage(id) {
+        if (!VALID.includes(id)) id = 'home';
+        document.querySelectorAll('.page').forEach(function (p) {
+          p.classList.toggle('is-active', p.id === id);
+        });
+        document.querySelectorAll('[data-nav-link]').forEach(function (a) {
+          a.classList.toggle('is-active', a.getAttribute('data-nav-link') === id);
+        });
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+
+      function routeFromHash() {
+        const id = (location.hash || '#home').replace('#', '');
+        showPage(id);
+      }
+
+      window.addEventListener('hashchange', routeFromHash);
+      window.addEventListener('DOMContentLoaded', routeFromHash);
+      window.showPage = showPage;
+    })();
+
+    (function () {
+      const nav = document.getElementById('nav');
+      if (!nav) return;
+      let ticking = false;
+      function update() {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
+      update();
+    })();
+
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(hover: none)').matches) return;
+      let rafId = null;
+      let mx = window.innerWidth / 2;
+      let my = window.innerHeight / 2;
+      document.addEventListener('pointermove', function (e) {
+        mx = e.clientX;
+        my = e.clientY;
+        if (rafId) return;
+        rafId = requestAnimationFrame(function () {
+          document.body.style.setProperty('--mx', mx + 'px');
+          document.body.style.setProperty('--my', my + 'px');
+          rafId = null;
+        });
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,936 @@
+@import "./fonts.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Quarky design tokens — 1:1 from cursor.com snapshot in /cursor.
+ *
+ * Typography: CursorGothic (sans) is the dominant family. EB Garamond and
+ * berkeleyMono are accents. Headlines use weight 400 — visual weight comes
+ * from size + tight tracking, not bold.
+ *
+ * Vertical rhythm is built on `--v: 1.4rem` (22.4px), exactly as cursor.com.
+ * Sections use multiples: v8 = 179px, v10 = 224px.
+ *
+ * Color system: warm cream `#f7f7f4` bg + warm dark `#26251e` fg.
+ * Acento de marca removido (cursor usa #f54e00; Quarky é monocromática).
+ */
+
+:root {
+  /* Vertical unit (cursor.com --v) */
+  --v: 1.4rem;
+
+  /* Color — light, warm */
+  --color-bg: #f7f7f4;
+  --color-fg: #26251e;
+  --color-card: #f2f1ed;
+  --color-card-2: #ebeae5;
+  --color-card-3: #e6e5e0;
+  --color-card-4: #e1e0db;
+
+  /* Foreground at opacities, matching cursor's color-mix tokens */
+  --color-fg-01: rgba(38, 37, 30, 0.01);
+  --color-fg-025: rgba(38, 37, 30, 0.025);
+  --color-fg-05: rgba(38, 37, 30, 0.05);
+  --color-fg-075: rgba(38, 37, 30, 0.075);
+  --color-fg-10: rgba(38, 37, 30, 0.1);
+  --color-fg-15: rgba(38, 37, 30, 0.15);
+  --color-fg-20: rgba(38, 37, 30, 0.2);
+  --color-fg-40: rgba(38, 37, 30, 0.4);
+  --color-fg-60: rgba(38, 37, 30, 0.6);
+  --color-fg-80: rgba(38, 37, 30, 0.8);
+
+  /* Border tokens (cursor: --color-theme-border-01..03) */
+  --color-border-01: var(--color-fg-025);
+  --color-border-015: var(--color-fg-05);
+  --color-border-02: var(--color-fg-10);
+  --color-border-025: var(--color-fg-20);
+  --color-border-03: var(--color-fg-60);
+
+  /* Type scale — exact values from cursor.com */
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.875rem; /* 14 */
+  --text-base: 1rem; /* 16 */
+  --text-md-sm: 1.125rem; /* 18 */
+  --text-md: 1.375rem; /* 22 */
+  --text-md-lg: 1.625rem; /* 26 */
+  --text-lg: 2.25rem; /* 36 */
+  --text-xl: 3.25rem; /* 52 */
+  --text-2xl: 4.5rem; /* 72 */
+
+  /* Leading — exact from cursor.com */
+  --leading-tight: 1.1;
+  --leading-2xsnug: 1.15;
+  --leading-xsnug: 1.2;
+  --leading-snug: 1.25;
+  --leading-snug-plus: 1.3;
+  --leading-cozy: 1.4;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Tracking — exact from cursor.com */
+  --tracking-base: 0.005em;
+  --tracking-sm: 0.01em;
+  --tracking-wide: 0.025em;
+  --tracking-md: -0.005em;
+  --tracking-md-lg: -0.015em;
+  --tracking-lg: -0.02em;
+  --tracking-xl: -0.025em;
+  --tracking-2xl: -0.03em;
+
+  /* Weight */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Header */
+  --site-header-height: 56px;
+
+  /* Frosted-glass tints — frame da Hero sobre a pintura */
+  --hero-frame-bg: rgba(232, 228, 217, 0.55);
+  --hero-frame-bg-2: rgba(223, 218, 205, 0.6);
+  --hero-frame-bg-base: rgba(238, 234, 224, 0.5);
+
+  /* Scheme hint para form controls nativos */
+  color-scheme: light;
+}
+
+/* ─── Dark mode (cursor.com style) ────────────────────────────────────
+   Aplicado quando <html data-theme="dark">. Flipa todos os tokens de
+   cor para a paleta warm-dark, mantendo a mesma estrutura de opacidades.
+   ──────────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg: #100f0a;
+  --color-fg: #f5f2ee;
+
+  --color-card: #1a1810;
+  --color-card-2: #221f16;
+  --color-card-3: #2a261b;
+  --color-card-4: #322e21;
+
+  --color-fg-01: rgba(245, 242, 238, 0.01);
+  --color-fg-025: rgba(245, 242, 238, 0.04);
+  --color-fg-05: rgba(245, 242, 238, 0.06);
+  --color-fg-075: rgba(245, 242, 238, 0.09);
+  --color-fg-10: rgba(245, 242, 238, 0.12);
+  --color-fg-15: rgba(245, 242, 238, 0.18);
+  --color-fg-20: rgba(245, 242, 238, 0.22);
+  --color-fg-40: rgba(245, 242, 238, 0.42);
+  --color-fg-60: rgba(245, 242, 238, 0.58);
+  --color-fg-80: rgba(245, 242, 238, 0.76);
+
+  --color-border-01: var(--color-fg-025);
+  --color-border-015: var(--color-fg-05);
+  --color-border-02: var(--color-fg-10);
+  --color-border-025: var(--color-fg-20);
+  --color-border-03: var(--color-fg-60);
+
+  /* Frosted-glass tints — frame da Hero sobre a pintura (dark) */
+  --hero-frame-bg: rgba(20, 18, 12, 0.55);
+  --hero-frame-bg-2: rgba(28, 25, 17, 0.62);
+  --hero-frame-bg-base: rgba(14, 12, 8, 0.5);
+
+  color-scheme: dark;
+}
+
+html,
+body {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ─── Hero pipeline frame · pintura de fundo (cursor.com style) ──── */
+.hero-frame-bg {
+  /* container do "quadro" */
+}
+.hero-frame-bg-image {
+  z-index: 0;
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+.hero-frame-bg-overlay {
+  z-index: 1;
+  /* Vignette fade pra cor do bg do site nas bordas (light) */
+  background:
+    radial-gradient(130% 110% at 50% 50%, transparent 58%, var(--color-bg) 100%);
+  transition: background 0.35s ease;
+}
+
+[data-theme="dark"] .hero-frame-bg-image {
+  opacity: 0.7;
+  filter: saturate(0.88);
+}
+[data-theme="dark"] .hero-frame-bg-overlay {
+  background:
+    radial-gradient(130% 110% at 50% 50%, transparent 52%, var(--color-bg) 100%);
+}
+
+/* Frame da HeroDemo fica 100% sólido — sem overrides de transparência.
+ * A pintura aparece SÓ na moldura/padding ao redor do frame. */
+
+/* Logos com fill escuro hardcoded → invertidos em dark mode para ficarem
+ * claros. Usa filter (em vez de SVG colorido) porque next/image renderiza
+ * o SVG via <img> que não respeita currentColor. */
+[data-theme="dark"] .logo-invert {
+  filter: invert(0.94) brightness(1.02) sepia(0.04);
+}
+
+/* Sobre · background SP — slow drift via CSS keyframes (GPU only) */
+@keyframes spBgDrift {
+  0%,
+  100% {
+    transform: scale(1.06);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+.sp-bg-drift {
+  animation: spBgDrift 32s ease-in-out infinite;
+  will-change: transform;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-bg-drift {
+    animation: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--color-border-02);
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--site-header-height);
+}
+
+body {
+  font-family: "CursorGothic", "CursorGothic Fallback", system-ui,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-base);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TYPE PRIMITIVES — mirror cursor.com .type-* utilities.
+   All sans (CursorGothic), all weight 400. Visual weight = size + tracking.
+   ─────────────────────────────────────────────────────────────── */
+.type-2xl {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-2xl);
+}
+.type-xl {
+  font-size: var(--text-xl);
+  line-height: var(--leading-2xsnug);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-xl);
+}
+.type-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-xsnug);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-lg);
+}
+.type-md-lg {
+  font-size: var(--text-md-lg);
+  line-height: var(--leading-snug);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-md-lg);
+}
+.type-md {
+  font-size: var(--text-md);
+  line-height: var(--leading-snug-plus);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-md);
+}
+.type-md-sm {
+  font-size: var(--text-md-sm);
+  line-height: var(--leading-cozy);
+  font-weight: var(--fw-normal);
+}
+.type-base {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-base);
+}
+.type-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-sm);
+}
+.type-xs {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  font-weight: var(--fw-normal);
+  letter-spacing: var(--tracking-sm);
+}
+
+/* Responsive type modifier — cursor uses this pattern: type-xl sm:type-2xl */
+@media (min-width: 768px) {
+  .md\:type-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-2xl);
+  }
+  .md\:type-xl {
+    font-size: var(--text-xl);
+    line-height: var(--leading-2xsnug);
+    letter-spacing: var(--tracking-xl);
+  }
+  .md\:type-lg {
+    font-size: var(--text-lg);
+    line-height: var(--leading-xsnug);
+    letter-spacing: var(--tracking-lg);
+  }
+  .md\:type-md-lg {
+    font-size: var(--text-md-lg);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-md-lg);
+  }
+  .md\:type-md {
+    font-size: var(--text-md);
+    line-height: var(--leading-snug-plus);
+    letter-spacing: var(--tracking-md);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CONTAINER + SECTION — cursor.com uses 7xl = 80rem (1280px) container
+   and section padding scaled by --v.
+   ─────────────────────────────────────────────────────────────── */
+.container-site {
+  width: 100%;
+  max-width: 80rem; /* --container-7xl */
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.section {
+  padding-block: calc(var(--v) * 4); /* v4 = ~90px */
+}
+@media (min-width: 768px) {
+  .section {
+    padding-block: calc(var(--v) * 6); /* v6 = ~134px */
+  }
+}
+@media (min-width: 1024px) {
+  .section {
+    padding-block: calc(var(--v) * 8); /* v8 = ~179px */
+  }
+}
+
+/* Hero — extra top padding to clear sticky header */
+.section--hero {
+  padding-block: calc(var(--v) * 5) calc(var(--v) * 6);
+}
+@media (min-width: 768px) {
+  .section--hero {
+    padding-block: calc(var(--v) * 7) calc(var(--v) * 8);
+  }
+}
+@media (min-width: 1024px) {
+  .section--hero {
+    padding-block: calc(var(--v) * 8) calc(var(--v) * 10);
+  }
+}
+
+/* Hairline — universal in cursor.com */
+.hairline {
+  border-top: 1px solid var(--color-border-02);
+}
+
+/* Mono caption — cursor's eyebrow / label pattern */
+.mono-cap {
+  font-family: "berkeleyMono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+  font-size: 0.6875rem; /* matches --text-product-sm */
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-fg-60);
+  font-weight: var(--fw-normal);
+}
+
+/* Numeric pad-zero label */
+.num-cap {
+  font-family: "berkeleyMono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-fg-60);
+}
+
+/* Text balance helper (cursor uses this on most headings) */
+.balance {
+  text-wrap: balance;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CONSTRUCAO MICRO-VISUALS — small monochrome inline animations
+   used inside the Construcao section's cream cards (wave, eq, dots).
+   Plus the AI typewriter caret blink.
+   ─────────────────────────────────────────────────────────────── */
+.wave-strip {
+  animation: wave-scroll 6s linear infinite;
+}
+@keyframes wave-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq-pulse 1.6s ease-in-out infinite;
+}
+@keyframes eq-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.led-dot {
+  animation: led-blink 2.4s ease-in-out infinite;
+}
+@keyframes led-blink {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.ai-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--color-fg);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: caret-blink 0.9s steps(2, end) infinite;
+}
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   QUARKY HOLDING — pillar card animations.
+   Each card has its own visual + animation language:
+     01 Infraestrutura → Framer Motion (block spawn/rotate/dock + flash)
+     02 Dados          → Canvas 2D (rain + words + waves)
+     03 Inteligência   → Framer Motion + CSS pulse waves
+   ─────────────────────────────────────────────────────────────── */
+
+/* Trace lines (subtle dashed reference geometry) */
+.iso-trace {
+  stroke: var(--color-fg);
+  fill: none;
+  stroke-opacity: 0.15;
+  stroke-dasharray: 1.5 3;
+}
+
+/* Infraestrutura card — wide falling blocks */
+.infra-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  perspective: 760px;
+  transform-style: preserve-3d;
+  background: radial-gradient(
+      circle at 50% 62%,
+      var(--color-fg-05),
+      transparent 38%
+    ),
+    linear-gradient(180deg, transparent 0%, var(--color-fg-01) 100%);
+}
+
+.infra-guide {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.48;
+}
+
+.infra-guide--vertical {
+  left: 50%;
+  top: 19%;
+  bottom: 22%;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-fg-20) 0,
+    var(--color-fg-20) 2px,
+    transparent 2px,
+    transparent 7px
+  );
+}
+
+.infra-guide--base {
+  left: 22%;
+  right: 22%;
+  bottom: 19%;
+  height: 1px;
+  background: var(--color-fg-10);
+}
+
+.infra-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 13%;
+  width: min(46%, 170px);
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-fg-05);
+  filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.infra-plate-wrap {
+  --stack-y: 0px;
+  --spin-end: 360deg;
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  width: clamp(124px, 58%, 184px);
+  aspect-ratio: 2.18 / 1;
+  transform: translateX(-50%) translateY(var(--stack-y));
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.infra-plate-wrap--fall {
+  animation: infra-block-fall 2100ms both;
+}
+
+.infra-plate {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-fg-60);
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--color-fg-075), transparent 42%),
+    linear-gradient(180deg, var(--color-bg), var(--color-card));
+  box-shadow: inset 0 0 0 1px var(--color-fg-025),
+    0 14px 28px var(--color-fg-05);
+  opacity: 0.78;
+  transform: rotateY(0deg) rotateX(58deg) rotateZ(-45deg);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.infra-plate::before,
+.infra-plate::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: var(--color-fg-10);
+}
+
+.infra-plate::before {
+  top: 30%;
+}
+
+.infra-plate::after {
+  bottom: 27%;
+}
+
+.infra-plate-wrap--fall .infra-plate {
+  animation: infra-block-spin 2100ms both, infra-block-flash 2100ms both;
+}
+
+.infra-plate-mark {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 18px;
+  height: 7px;
+  border: 1px solid var(--color-fg-20);
+  border-radius: 999px;
+}
+
+.infra-plate-line {
+  position: absolute;
+  right: 13px;
+  height: 1px;
+  background: var(--color-fg-20);
+}
+
+.infra-plate-line--a {
+  top: 13px;
+  width: 35%;
+}
+
+.infra-plate-line--b {
+  top: 19px;
+  width: 26%;
+}
+
+.infra-plate-line--c {
+  top: 25px;
+  width: 16%;
+}
+
+@keyframes infra-block-fall {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(var(--stack-y) - 138px))
+      scale(0.96);
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  12% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(var(--stack-y) - 22px))
+      scale(1);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(var(--stack-y) - 22px))
+      scale(1);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  88%,
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(var(--stack-y)) scale(1);
+  }
+}
+
+@keyframes infra-block-spin {
+  0%,
+  58% {
+    transform: rotateY(0deg) rotateX(58deg) rotateZ(-45deg);
+  }
+  84%,
+  100% {
+    transform: rotateY(var(--spin-end)) rotateX(58deg) rotateZ(-45deg);
+  }
+}
+
+@keyframes infra-block-flash {
+  0%,
+  86% {
+    filter: brightness(1);
+    opacity: 0.78;
+    box-shadow: inset 0 0 0 1px var(--color-fg-025),
+      0 14px 28px var(--color-fg-05);
+  }
+  88% {
+    filter: brightness(1.18);
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px var(--color-fg-20),
+      0 0 0 1px var(--color-fg-10), 0 16px 32px var(--color-fg-10);
+  }
+  90% {
+    filter: brightness(0.94);
+    opacity: 0.42;
+  }
+  92% {
+    filter: brightness(1.16);
+    opacity: 1;
+  }
+  94% {
+    filter: brightness(0.96);
+    opacity: 0.5;
+  }
+  96% {
+    filter: brightness(1.12);
+    opacity: 1;
+  }
+  98% {
+    filter: brightness(0.98);
+    opacity: 0.62;
+  }
+  100% {
+    filter: brightness(1);
+    opacity: 0.78;
+  }
+}
+
+/* Tower block flash on dock — runs once with the entry choreography */
+.cube-line {
+  stroke: var(--color-fg);
+  stroke-width: 0.85;
+  fill: none;
+  stroke-linejoin: round;
+  stroke-opacity: 0.42;
+  animation: cube-flash 2.4s ease-out;
+}
+@keyframes cube-flash {
+  0%,
+  88% {
+    stroke-opacity: 0.42;
+    stroke-width: 0.85;
+  }
+  91%,
+  95% {
+    stroke-opacity: 1;
+    stroke-width: 1.4;
+  }
+  100% {
+    stroke-opacity: 0.42;
+    stroke-width: 0.85;
+  }
+}
+
+/* Neural network propagation pulse — opacity-only so it doesn't
+   conflict with Framer Motion transform/scale on entry. */
+.nn-node {
+  fill: var(--color-fg);
+  animation: nn-node-fire 2.4s ease-in-out infinite;
+}
+@keyframes nn-node-fire {
+  0%,
+  100% {
+    fill-opacity: 0.4;
+  }
+  50% {
+    fill-opacity: 1;
+  }
+}
+
+.nn-edge {
+  stroke: var(--color-fg);
+  stroke-width: 0.5;
+  fill: none;
+  animation: nn-edge-fire 2.4s ease-in-out infinite;
+}
+@keyframes nn-edge-fire {
+  0%,
+  100% {
+    stroke-opacity: 0.12;
+  }
+  50% {
+    stroke-opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-strip,
+  .eq-bar,
+  .led-dot,
+  .ai-caret,
+  .cube-line,
+  .infra-plate-wrap--fall,
+  .infra-plate-wrap--fall .infra-plate,
+  .nn-node,
+  .nn-edge {
+    animation: none;
+    stroke-opacity: 0.55;
+    fill-opacity: 0.85;
+  }
+}
+
+/* Optional serif accent — used very sparingly, only for editorial pulls */
+.serif {
+  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype",
+    "URW Palladio L", P052, ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   QUARKY ANIMATION SYSTEM
+   Drop-in scroll reveal classes used across all sections.
+   The IntersectionObserver lives in <RevealObserver /> mounted
+   from app/layout.tsx — it adds the `.visible` class on first
+   intersection and unobserves the element.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Base reveal — fade up */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays */
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+.reveal-delay-5 {
+  transition-delay: 0.5s;
+}
+
+/* Slide from the right (use on even-step mockups) */
+.reveal-from-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-from-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide from the left (use on odd-step mockups) */
+.reveal-from-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-from-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Live-data pulse (e.g. streaming indicators) */
+@keyframes quarky-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.75);
+  }
+}
+.pulse-live {
+  animation: quarky-pulse 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Soft glow for Orion / future-product badges */
+@keyframes orion-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+.orion-badge-pulse {
+  animation: orion-glow 2s ease-in-out infinite;
+}
+
+/* Counter transition (paired with JS-driven number changes) */
+.counter-value {
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DARK PRODUCT MOCKUP — Cursor-style dark surface for embedded
+   widgets. Wrap any widget in <div class="dark-mockup"> and the
+   color tokens flip: #1A1A1A surface + light text. Every existing
+   utility (.text-fg, .bg-card, .mono-cap, etc.) follows automatically
+   via CSS variable inheritance — no JSX rewrites needed.
+   ─────────────────────────────────────────────────────────────── */
+.dark-mockup {
+  --color-bg: #1a1a1a;
+  --color-card: #1a1a1a;
+  --color-card-2: #0f0f0f;
+  --color-card-3: #161616;
+  --color-card-4: #121212;
+
+  --color-fg: #f5f2ee;
+  --color-fg-01: rgba(245, 242, 238, 0.01);
+  --color-fg-025: rgba(245, 242, 238, 0.04);
+  --color-fg-05: rgba(245, 242, 238, 0.06);
+  --color-fg-075: rgba(245, 242, 238, 0.09);
+  --color-fg-10: rgba(245, 242, 238, 0.12);
+  --color-fg-15: rgba(245, 242, 238, 0.18);
+  --color-fg-20: rgba(245, 242, 238, 0.22);
+  --color-fg-40: rgba(245, 242, 238, 0.42);
+  --color-fg-60: rgba(245, 242, 238, 0.58);
+  --color-fg-80: rgba(245, 242, 238, 0.76);
+
+  --color-border-01: var(--color-fg-025);
+  --color-border-015: var(--color-fg-05);
+  --color-border-02: var(--color-fg-10);
+  --color-border-025: var(--color-fg-20);
+  --color-border-03: var(--color-fg-60);
+
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-live,
+  .orion-badge-pulse {
+    animation: none;
+  }
+  /* Reveal classes still toggle .visible but the global reduced-motion
+     rule above forces transition-duration → 0.01ms, so they appear instantly. */
+}
