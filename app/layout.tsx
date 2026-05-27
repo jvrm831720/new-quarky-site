@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { RevealObserver } from "@/components/ui/RevealObserver";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quarky.com.br"),
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body>
         {children}
         <RevealObserver />
+        <SpeedInsights />
       </body>
     </html>
   );
